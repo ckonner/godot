@@ -602,6 +602,9 @@ public:
 
 	void update_viewport();
 
+	void center_selection();
+	void frame_selection();
+
 	Tool get_current_tool() { return tool; }
 	void set_current_tool(Tool p_tool);
 

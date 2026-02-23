@@ -35,6 +35,7 @@
 #include "core/object/object.h"
 #include "core/object/script_language.h"
 
+class CanvasItemEditor;
 class Control;
 class CreateDialog;
 class EditorCommandPalette;
@@ -100,6 +101,7 @@ public:
 
 	// Editor tools.
 
+	CanvasItemEditor *get_canvas_item_editor() const;
 	EditorCommandPalette *get_command_palette() const;
 	EditorFileSystem *get_resource_filesystem() const;
 	EditorPaths *get_editor_paths() const;
@@ -111,6 +113,10 @@ public:
 
 	Vector<Ref<Texture2D>> make_mesh_previews(const Vector<Ref<Mesh>> &p_meshes, Vector<Transform3D> *p_transforms, int p_preview_size);
 	void make_scene_preview(const String &p_path, Node *p_scene, int p_preview_size);
+
+	void center_selection() const;
+	void center_at(const Vector2 &p_position);
+	void frame_selection() const;
 
 	void set_plugin_enabled(const String &p_plugin, bool p_enabled);
 	bool is_plugin_enabled(const String &p_plugin) const;

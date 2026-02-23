@@ -5161,6 +5161,14 @@ void CanvasItemEditor::_set_owner_for_node_and_children(Node *p_node, Node *p_ow
 	}
 }
 
+void CanvasItemEditor::center_selection() {
+	_focus_selection(VIEW_CENTER_TO_SELECTION);
+}
+
+void CanvasItemEditor::frame_selection() {
+	_focus_selection(VIEW_FRAME_TO_SELECTION);
+}
+
 void CanvasItemEditor::_focus_selection(int p_op) {
 	Rect2 rect;
 	int count = 0;
@@ -5226,6 +5234,9 @@ void CanvasItemEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("center_at", "position"), &CanvasItemEditor::center_at);
 
 	ClassDB::bind_method("_set_owner_for_node_and_children", &CanvasItemEditor::_set_owner_for_node_and_children);
+
+	ClassDB::bind_method(D_METHOD("center_selection"), &CanvasItemEditor::center_selection);
+	ClassDB::bind_method(D_METHOD("frame_selection"), &CanvasItemEditor::frame_selection);
 
 	ADD_SIGNAL(MethodInfo("item_lock_status_changed"));
 	ADD_SIGNAL(MethodInfo("item_group_status_changed"));

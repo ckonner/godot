@@ -47,6 +47,7 @@
 #include "editor/inspector/property_selector.h"
 #include "editor/run/editor_run_bar.h"
 #include "editor/scene/3d/node_3d_editor_plugin.h"
+#include "editor/scene/canvas_item_editor_plugin.h"
 #include "editor/scene/editor_scene_tabs.h"
 #include "editor/scene/scene_tree_editor.h"
 #include "editor/settings/editor_command_palette.h"
@@ -72,6 +73,10 @@ void EditorInterface::restart_editor(bool p_save) {
 }
 
 // Editor tools.
+
+CanvasItemEditor *EditorInterface::get_canvas_item_editor() const {
+	return CanvasItemEditor::get_singleton();
+}
 
 EditorCommandPalette *EditorInterface::get_command_palette() const {
 	return EditorCommandPalette::get_singleton();
@@ -385,6 +390,27 @@ void EditorInterface::add_root_node(Node *p_node) {
 	EditorNode::get_singleton()->set_edited_scene(p_node);
 	EditorUndoRedoManager::get_singleton()->set_history_as_unsaved(EditorNode::get_editor_data().get_current_edited_scene_history_id());
 	EditorSceneTabs::get_singleton()->update_scene_tabs();
+}
+
+void EditorInterface::center_selection() const {
+	CanvasItemEditor *cie = get_canvas_item_editor();
+	if (cie) {
+		cie->center_selection();
+	}
+}
+
+void EditorInterface::center_at(const Vector2 &p_position) {
+	CanvasItemEditor *cie = get_canvas_item_editor();
+	if (cie) {
+		cie->center_at(p_position);
+	}
+}
+
+void EditorInterface::frame_selection() const {
+	CanvasItemEditor *cie = get_canvas_item_editor();
+	if (cie) {
+		cie->frame_selection();
+	}
 }
 
 void EditorInterface::set_plugin_enabled(const String &p_plugin, bool p_enabled) {
@@ -831,6 +857,10 @@ void EditorInterface::_bind_methods() {
 
 	// Editor tools.
 
+	ClassDB::bind_method(D_METHOD("center_selection"), &EditorInterface::center_selection);
+	ClassDB::bind_method(D_METHOD("center_at", "position"), &EditorInterface::center_at);
+	ClassDB::bind_method(D_METHOD("frame_selection"), &EditorInterface::frame_selection);
+	ClassDB::bind_method(D_METHOD("get_canvas_item_editor"), &EditorInterface::get_canvas_item_editor);
 	ClassDB::bind_method(D_METHOD("get_command_palette"), &EditorInterface::get_command_palette);
 	ClassDB::bind_method(D_METHOD("get_resource_filesystem"), &EditorInterface::get_resource_filesystem);
 	ClassDB::bind_method(D_METHOD("get_editor_paths"), &EditorInterface::get_editor_paths);
